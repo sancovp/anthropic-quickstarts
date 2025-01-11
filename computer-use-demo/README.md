@@ -180,3 +180,20 @@ docker run \
 ```
 
 The docker run command above mounts the repo inside the docker image, such that you can edit files from the host. Streamlit is already configured with auto reloading.
+
+
+
+# Adjusted Run Command
+```bash
+docker run \
+    --privileged \
+    -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY \
+    -v $(pwd)/computer_use_demo:/home/computeruse/computer_use_demo/ `# mount local python module for development` \
+    -v $HOME/.anthropic:/home/computeruse/.anthropic \
+    -v /var/run/docker.sock:/var/run/docker.sock `# bind mount Docker socket for dind` \
+    -p 5900:5900 \
+    -p 8501:8501 \
+    -p 6080:6080 \
+    -p 8080:8080 \
+    -it computer-use-demo:local  # can also use ghcr.io/anthropics/anthropic-quickstarts:computer-use-demo-latest
+```
